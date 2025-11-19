@@ -293,7 +293,7 @@ function plus_minus(){
 function square_root(){
     box = document.getElementById("box");
     var square_num = Math.sqrt(box.innerText)
-    box.innerText = square_num
+    box.innerText = square_num.toPrecision(12);
     numbers.push(square_num)
 }
 
@@ -301,7 +301,7 @@ function square_root(){
 function division_one(){
     box = document.getElementById("box");
     var square_num = 1/box.innerText
-    box.innerText = square_num
+    box.innerText = square_num.toPrecision(12)
     numbers.push(square_num)
 }
 
@@ -309,7 +309,7 @@ function division_one(){
 function power_of(){
     box = document.getElementById("box");
     var square_num =Math.pow(box.innerText, 2)
-    box.innerText = square_num
+    box.innerText = square_num.toPrecision(12)
     numbers.push(square_num)
 }
 
