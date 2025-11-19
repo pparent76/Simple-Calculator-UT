@@ -1,0 +1,14 @@
+[Desktop Entry]
+Name=Simple Calculator
+Comment=A simple calculator app
+Exec=qmlscene %u app/Main.qml --scaling --gles 
+Terminal=false
+Type=Application
+Icon=icon.png
+X-Ubuntu-Touch=true
+X-Lomiri-Touch=true
+
+X-Ubuntu-Splash-Color=#f78600
+X-Ubuntu-Splash-Image=icon-splash.png
+
+Name[en_US]=pdfjs
