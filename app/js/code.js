@@ -3,6 +3,7 @@ var operators = ["+", "-", "/", "*"];
 var box = null;
 var last_operation_history = null;
 var last_implicit_operation = null;
+var previous_implicit_number = null;
 var operator = null;
 var equal = null;
 var dot = null;
@@ -78,6 +79,7 @@ function button_number(button) {
         //allow operations in a row
         if (operators.includes(button) && button!=equal && calc_operator != null && !firstOp && !firstNum){
                 numbers[1] = box.innerText
+                previous_implicit_number = numbers[1]
                 var total = calculate(numbers[0], numbers[1], calc_operator)
                 box.innerText = total;
                 last_implicit_operation=last_operation_history.innerText + " " + numbers[1] + " =";
@@ -181,6 +183,7 @@ function button_number(button) {
                      last_operation_history.innerText = last_implicit_operation;
                      showSelectedOperator();
                      resCalculated=false;
+                     numbers[1]=previous_implicit_number;
                 }
             }
             // update history with the value on screen and the pressed operator
