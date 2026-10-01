@@ -154,9 +154,14 @@ function button_number(button) {
             var temp_num = box.innerText
 
             // calculate total
-            if (button==equal && calc_operator != null){
-                if ( resCalculated == false )
+            if ( button==equal ){
+                if ( last_implicit_operation == null )
                 {
+                if ( previous_implicit_number != null )
+                {
+                    numbers[1]=previous_implicit_number;
+                    previous_implicit_number=null;
+                }
                 var total = calculate(numbers[0], numbers[1], calc_operator)
                 box.innerText = total;
 
@@ -181,9 +186,8 @@ function button_number(button) {
                 else
                 {
                      last_operation_history.innerText = last_implicit_operation;
+                     last_implicit_operation = null;
                      showSelectedOperator();
-                     resCalculated=false;
-                     numbers[1]=previous_implicit_number;
                 }
             }
             // update history with the value on screen and the pressed operator
