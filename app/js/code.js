@@ -177,7 +177,11 @@ function button_number(button) {
                 firstOp=true;
                 }
                 else
+                {
                      last_operation_history.innerText = last_implicit_operation;
+                     showSelectedOperator();
+                     resCalculated=false;
+                }
             }
             // update history with the value on screen and the pressed operator
             else if (calc_operator != null) {
