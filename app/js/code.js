@@ -2,11 +2,14 @@ var operators = ["+", "-", "/", "*"];
 
 var box = null;
 var last_operation_history = null;
+var last_implicit_operation = null;
 var operator = null;
 var equal = null;
 var dot = null;
 
 var firstNum = true;
+var firstOp = true;
+var resCalculated = false;
 
 var numbers = [];
 var operator_value;
@@ -28,6 +31,7 @@ function button_number(button) {
 
     // if button is not an operator or = sign
     if (!operators.includes(button) && button!=equal){
+        resCalculated = false;
         // if it is the first button clicked
         if (firstNum){
             // and it's a dot, show 0.
@@ -72,17 +76,11 @@ function button_number(button) {
     // if it's an operator or = sign
     else {
         //allow operations in a row
-        if (operators.includes(button) && button!=equal)
-        {
-            if (calc_operator != null && !firstNum){
+        if (operators.includes(button) && button!=equal && calc_operator != null && !firstOp){
                 numbers[1] = box.innerText
                 var total = calculate(numbers[0], numbers[1], calc_operator)
                 box.innerText = total;
-                // append second number to history
-                if (!last_operation_history.innerText.includes("=")){
-                    last_operation_history.innerText += " " + numbers[1] + " ="
-                    firstNum=true;
-                }
+                last_implicit_operation=last_operation_history.innerText + " " + numbers[1] + " =";
 
                 temp_num = numbers[0]
 
@@ -90,11 +88,9 @@ function button_number(button) {
                 operator_value = null
                 showSelectedOperator()
 
-                // replace first number of history with the value of total
-                var history_arr = last_operation_history.innerText.split(" ")
-                history_arr[0] = temp_num
-                last_operation_history.innerText = history_arr.join(" ")
-            }
+                firstNum = true;
+                firstOp = true;
+                resCalculated = true;
         }
         // return if operator is already pressed
         if (operator_value != null && button == operator_value){
@@ -137,6 +133,7 @@ function button_number(button) {
             }
             operator_value = button
             firstNum = true
+            firstOp = false;
             showSelectedOperator()
         }
 
@@ -156,15 +153,16 @@ function button_number(button) {
 
             // calculate total
             if (button==equal && calc_operator != null){
+                if ( resCalculated == false )
+                {
                 var total = calculate(numbers[0], numbers[1], calc_operator)
                 box.innerText = total;
 
                 // append second number to history
                 if (!last_operation_history.innerText.includes("=")){
                     last_operation_history.innerText += " " + numbers[1] + " ="
-                    firstNum=true;
                 }
-
+                
                 temp_num = numbers[0]
 
                 numbers[0] = total
@@ -175,6 +173,11 @@ function button_number(button) {
                 var history_arr = last_operation_history.innerText.split(" ")
                 history_arr[0] = temp_num
                 last_operation_history.innerText = history_arr.join(" ")
+                firstNum=true;
+                firstOp=true;
+                }
+                else
+                     last_operation_history.innerText = last_implicit_operation;
             }
             // update history with the value on screen and the pressed operator
             else if (calc_operator != null) {
@@ -263,6 +266,7 @@ function backspace_remove(){
     if (box.innerText.length == 0){
         box.innerText = 0
         firstNum = true
+        firstOp=true;
     }
 
 }
