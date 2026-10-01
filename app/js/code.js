@@ -71,7 +71,31 @@ function button_number(button) {
     }
     // if it's an operator or = sign
     else {
+        //allow operations in a row
+        if (operators.includes(button) && button!=equal)
+        {
+            if (calc_operator != null){
+                numbers[1] = box.innerText
+                var total = calculate(numbers[0], numbers[1], calc_operator)
+                box.innerText = total;
+                // append second number to history
+                if (!last_operation_history.innerText.includes("=")){
+                    last_operation_history.innerText += " " + numbers[1] + " ="
+                    firstNum=true;
+                }
 
+                temp_num = numbers[0]
+
+                numbers[0] = total
+                operator_value = null
+                showSelectedOperator()
+
+                // replace first number of history with the value of total
+                var history_arr = last_operation_history.innerText.split(" ")
+                history_arr[0] = temp_num
+                last_operation_history.innerText = history_arr.join(" ")
+            }
+        }
         // return if operator is already pressed
         if (operator_value != null && button == operator_value){
             return
