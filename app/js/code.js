@@ -3,6 +3,7 @@ var operators = ["+", "-", "/", "*"];
 var box = null;
 var last_operation_history = null;
 var last_implicit_operation = null;
+var last_result = null;
 var previous_implicit_number = null;
 var operator = null;
 var equal = null;
@@ -87,6 +88,7 @@ function button_number(button) {
 
                 temp_num = numbers[0]
 
+                last_result = total
                 numbers[0] = total
                 operator_value = null
                 showSelectedOperator()
@@ -149,40 +151,61 @@ function button_number(button) {
         }
         // rest of calculations
         else {   
-            if (numbers.length == 1){
+            if (numbers.length == 1 ){
                 numbers[1] = box.innerText
             }
             var temp_num = box.innerText
 
             // calculate total
             if ( button==equal ){
+                // console.log("Equal pushed, res calculated: ",resCalculated);
+                if ( resCalculated == false ){
+                numbers[1] = box.innerText
+                }
+                 // console.log("Equal pushed, number 0 : ", numbers[0]);
+                 // console.log("Equal pushed, number 1 : ", numbers[1]);
                 if ( last_implicit_operation == null )
                 {
-                if ( previous_implicit_number != null && numbers[1]==numbers[0] )
-                {
-                    numbers[1]=previous_implicit_number;
-                    previous_implicit_number=null;
-                }
-                var total = calculate(numbers[0], numbers[1], calc_operator)
-                box.innerText = total;
+                    if ( !firstNum && last_result != box.innerText && last_operation_history.innerText.includes("=")  )
+                    {
+                        last_operation_history.innerText = box.innerText + " =";
+                        firstNum=true;
+                        firstOp=true;
+                        last_implicit_operation = null;
+                        calc_operator = null;
+                        numbers = [];
+                        numbers.push(box.innerText);
+                    }
+                    else
+                    {
+                        if ( resCalculated == true && previous_implicit_number != null )
+                        {
+                            numbers[1]=previous_implicit_number;
+                        }
+                        var total = calculate(numbers[0], numbers[1], calc_operator)
+                        box.innerText = total;
 
-                // append second number to history
-                if (!last_operation_history.innerText.includes("=")){
-                    last_operation_history.innerText += " " + numbers[1] + " ="
-                }
-                
-                temp_num = numbers[0]
+                        // append second number to history
+                        if (!last_operation_history.innerText.includes("=")){
+                            last_operation_history.innerText += " " + numbers[1] + " ="
+                        }
+                        
+                        temp_num = numbers[0]
 
-                numbers[0] = total
-                operator_value = null
-                showSelectedOperator()
+                        numbers[0] = total
+                        last_result = total
+                        operator_value = null
+                        showSelectedOperator()
 
-                // replace first number of history with the value of total
-                var history_arr = last_operation_history.innerText.split(" ")
-                history_arr[0] = temp_num
-                last_operation_history.innerText = history_arr.join(" ")
-                firstNum=true;
-                firstOp=true;
+                        // replace first number of history with the value of total
+                        var history_arr = last_operation_history.innerText.split(" ")
+                        history_arr[0] = temp_num
+                        last_operation_history.innerText = history_arr.join(" ")
+                        firstNum=true;
+                        firstOp=true;
+                        resCalculated=true;
+                        previous_implicit_number=null
+                    }
                 }
                 else
                 {
