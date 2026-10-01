@@ -44,6 +44,7 @@ function button_number(button) {
                 box.innerText = button;
             }
             firstNum = false;
+            last_implicit_operation = null;
         }
         else {
 
@@ -157,7 +158,7 @@ function button_number(button) {
             if ( button==equal ){
                 if ( last_implicit_operation == null )
                 {
-                if ( previous_implicit_number != null )
+                if ( previous_implicit_number != null && numbers[1]==numbers[0] )
                 {
                     numbers[1]=previous_implicit_number;
                     previous_implicit_number=null;
