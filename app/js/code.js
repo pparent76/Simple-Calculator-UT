@@ -103,7 +103,7 @@ function button_number(button) {
         }
 
         // show minus sign if it's the first value selected and finally return
-        if (button == "-" && box.innerText == 0){
+        if (button == "-" && box.innerText == 0 && numbers.length == 0 ){
             box.innerText = button;
             firstNum = false;
             // operator_value = button
