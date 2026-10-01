@@ -374,13 +374,13 @@ function calculate_percentage(){
 // function to clear last number typed into the display
 function clear_entry(){
     box = document.getElementById("box");
-
+    box.innerText = 0
+    firstNum = true;
+        
     if (numbers.length > 0 && typeof last_operator != "undefined"){
-        box.innerText = 0
         var temp = numbers[0]
         numbers = []
         numbers.push(temp)
-        firstNum = true;
     }
 }
 
