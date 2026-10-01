@@ -76,7 +76,7 @@ function button_number(button) {
     // if it's an operator or = sign
     else {
         //allow operations in a row
-        if (operators.includes(button) && button!=equal && calc_operator != null && !firstOp){
+        if (operators.includes(button) && button!=equal && calc_operator != null && !firstOp && !firstNum){
                 numbers[1] = box.innerText
                 var total = calculate(numbers[0], numbers[1], calc_operator)
                 box.innerText = total;
