@@ -106,8 +106,8 @@ function button_number(button) {
         if (button == "-" && box.innerText == 0){
             box.innerText = button;
             firstNum = false;
-            operator_value = button
-            showSelectedOperator()
+            // operator_value = button
+            // showSelectedOperator()
             return;
         }
         // return if minus operator pressed and it's already printed on screen 
